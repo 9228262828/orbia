@@ -1,0 +1,6 @@
+import 'package:flutter/material.dart';
+import 'services/moment_service.dart';
+import 'screens/splash_screen.dart';
+class OrbiaApp extends StatefulWidget{const OrbiaApp({super.key});@override State<OrbiaApp> createState()=>_S();}
+class _S extends State<OrbiaApp>{final service=MomentService();@override void initState(){super.initState();service.load();}@override void dispose(){service.dispose();super.dispose();}
+@override Widget build(BuildContext context)=>MaterialApp(debugShowCheckedModeBanner:false,title:'Orbia',themeMode:ThemeMode.light,theme:ThemeData(useMaterial3:true,brightness:Brightness.light,scaffoldBackgroundColor:const Color(0xFFF8F5EF),colorScheme:ColorScheme.fromSeed(seedColor:const Color(0xFF1D2945),brightness:Brightness.light,primary:const Color(0xFF1D2945),secondary:const Color(0xFFF27761),tertiary:const Color(0xFF5E9B8C),surface:Colors.white),textTheme:const TextTheme(headlineLarge:TextStyle(fontWeight:FontWeight.w900,letterSpacing:-1.4),headlineMedium:TextStyle(fontWeight:FontWeight.w900),titleLarge:TextStyle(fontWeight:FontWeight.w900)),inputDecorationTheme:InputDecorationTheme(filled:true,fillColor:Colors.white,border:OutlineInputBorder(borderRadius:BorderRadius.circular(20),borderSide:BorderSide.none))),home:SplashScreen(service:service));}
