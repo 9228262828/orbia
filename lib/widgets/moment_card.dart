@@ -1,5 +1,101 @@
-import 'package:flutter/material.dart';import '../models/moment.dart';
-class MomentCard extends StatelessWidget{final Moment moment;final VoidCallback onFavorite,onSave,onDelete;const MomentCard({super.key,required this.moment,required this.onFavorite,required this.onSave,required this.onDelete});
-Color get accent{switch(moment.type){case MomentType.trip:return const Color(0xFF4D8EA0);case MomentType.birthday:return const Color(0xFFE68A9D);case MomentType.event:return const Color(0xFFF27761);case MomentType.goal:return const Color(0xFF5E9B8C);case MomentType.personal:return const Color(0xFF8A6FA8);case MomentType.other:return const Color(0xFF9A8E7D);}}
-IconData get icon{switch(moment.type){case MomentType.trip:return Icons.flight_takeoff_rounded;case MomentType.birthday:return Icons.cake_outlined;case MomentType.event:return Icons.local_activity_outlined;case MomentType.goal:return Icons.flag_outlined;case MomentType.personal:return Icons.favorite_outline_rounded;case MomentType.other:return Icons.auto_awesome_rounded;}}
-@override Widget build(BuildContext context){final d=moment.dayDistance,c=d.abs(),label=d<0?'$c days since':d==0?'Today':'$c days to go';return Container(padding:const EdgeInsets.all(18),decoration:BoxDecoration(color:moment.favorite?accent.withValues(alpha:.12):Colors.white,borderRadius:BorderRadius.circular(27),border:Border.all(color:moment.favorite?accent.withValues(alpha:.42):const Color(0xFFEAE4DA),width:moment.favorite?1.6:1)),child:Row(children:[Container(width:58,height:72,decoration:BoxDecoration(color:accent,borderRadius:BorderRadius.circular(20)),child:Icon(icon,color:Colors.white,size:28)),const SizedBox(width:15),Expanded(child:Column(crossAxisAlignment:CrossAxisAlignment.start,children:[Text(label.toUpperCase(),style:TextStyle(color:accent,fontSize:10,letterSpacing:1,fontWeight:FontWeight.w900)),const SizedBox(height:5),Text(moment.title,maxLines:1,overflow:TextOverflow.ellipsis,style:const TextStyle(fontSize:18,fontWeight:FontWeight.w900,color:Color(0xFF1D2945))),if(moment.note.isNotEmpty)...[const SizedBox(height:3),Text(moment.note,maxLines:1,overflow:TextOverflow.ellipsis,style:const TextStyle(color:Color(0xFF77736F)))]])),PopupMenuButton<String>(onSelected:(v){if(v=='favorite')onFavorite();if(v=='save')onSave();if(v=='delete')onDelete();},itemBuilder:(_)=>[PopupMenuItem(value:'favorite',child:Text(moment.favorite?'Remove favorite':'Add to favorites')),PopupMenuItem(value:'save',child:Text(moment.saved?'Unsave':'Save')),const PopupMenuItem(value:'delete',child:Text('Delete'))])])));}}
+import 'package:flutter/material.dart';
+import '../models/moment.dart';
+
+class MomentCard extends StatelessWidget {
+  final Moment moment;
+  final VoidCallback onFavorite, onSave, onDelete;
+
+  const MomentCard(
+      {super.key, required this.moment, required this.onFavorite, required this.onSave, required this.onDelete});
+
+  Color get accent {
+    switch (moment.type) {
+      case MomentType.trip:
+        return const Color(0xFF4D8EA0);
+      case MomentType.birthday:
+        return const Color(0xFFE68A9D);
+      case MomentType.event:
+        return const Color(0xFFF27761);
+      case MomentType.goal:
+        return const Color(0xFF5E9B8C);
+      case MomentType.personal:
+        return const Color(0xFF8A6FA8);
+      case MomentType.other:
+        return const Color(0xFF9A8E7D);
+    }
+  }
+
+  IconData get icon {
+    switch (moment.type) {
+      case MomentType.trip:
+        return Icons.flight_takeoff_rounded;
+      case MomentType.birthday:
+        return Icons.cake_outlined;
+      case MomentType.event:
+        return Icons.local_activity_outlined;
+      case MomentType.goal:
+        return Icons.flag_outlined;
+      case MomentType.personal:
+        return Icons.favorite_outline_rounded;
+      case MomentType.other:
+        return Icons.auto_awesome_rounded;
+    }
+  }
+
+  @override Widget build(BuildContext context) {
+    final d = moment.dayDistance,
+        c = d.abs(),
+        label = d < 0 ? '$c days since' : d == 0 ? 'Today' : '$c days to go';
+    return Container(padding: const EdgeInsets.all(18),
+        decoration: BoxDecoration(
+            color: moment.favorite ? accent.withValues(alpha: .12) : Colors
+                .white,
+            borderRadius: BorderRadius.circular(27),
+            border: Border.all(color: moment.favorite
+                ? accent.withValues(alpha: .42)
+                : const Color(0xFFEAE4DA), width: moment.favorite ? 1.6 : 1)),
+        child: Row(children: [
+          Container(width: 58,
+              height: 72,
+              decoration: BoxDecoration(
+                  color: accent, borderRadius: BorderRadius.circular(20)),
+              child: Icon(icon, color: Colors.white, size: 28)),
+          const SizedBox(width: 15),
+          Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(label.toUpperCase(), style: TextStyle(color: accent,
+                    fontSize: 10,
+                    letterSpacing: 1,
+                    fontWeight: FontWeight.w900)),
+                const SizedBox(height: 5),
+                Text(moment.title, maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(fontSize: 18,
+                        fontWeight: FontWeight.w900,
+                        color: Color(0xFF1D2945))),
+                if(moment.note.isNotEmpty)...[
+                  const SizedBox(height: 3),
+                  Text(moment.note, maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(color: Color(0xFF77736F)))
+                ]
+              ])),
+          PopupMenuButton<String>(onSelected: (v) {
+            if (v == 'favorite') onFavorite();
+            if (v == 'save') onSave();
+            if (v == 'delete') onDelete();
+          },
+              itemBuilder: (_) =>
+              [
+                PopupMenuItem(value: 'favorite',
+                    child: Text(moment.favorite
+                        ? 'Remove favorite'
+                        : 'Add to favorites')),
+                PopupMenuItem(value: 'save',
+                    child: Text(moment.saved ? 'Unsave' : 'Save')),
+                const PopupMenuItem(value: 'delete', child: Text('Delete'))
+              ])
+        ])
+    );
+  }
+}
